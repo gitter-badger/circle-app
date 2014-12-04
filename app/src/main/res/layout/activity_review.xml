@@ -1,0 +1,64 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.where2go.where2go.ReviewActivity"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="8"
+        android:orientation="vertical">
+
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/stars"
+            android:layout_gravity="center"
+            android:stepSize="1"
+            android:numStars="5" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapSentences"
+            android:imeOptions="actionNext"
+            android:hint="@string/title"
+            android:id="@+id/title"/>
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/description"
+            android:gravity="top"
+            android:inputType="textImeMultiLine|textCapSentences"
+            android:imeOptions="actionDone"
+            android:minLines="60"
+            android:lines="60"
+            android:id="@+id/description"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="?android:attr/buttonBarStyle"
+        android:background="@drawable/border_top"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="15dp">
+
+        <Button
+            style="?android:buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:onClick="submit"
+            android:layout_height="wrap_content"
+            android:text="@string/submit"
+            android:id="@+id/button2" />
+    </LinearLayout>
+
+</LinearLayout>

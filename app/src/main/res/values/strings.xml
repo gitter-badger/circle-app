@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Circle</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_game_activiy">Jugar</string>
+    <string name="title_activity_place_activiy">Lugares</string>
+    <string name="title_activity_review">Reseñas</string>
+    <string name="jugar">Jugar</string>
+    <string name="favs">Favoritos</string>
+    <string name="title_activity_favs">Favoritos</string>
+    <string name="facebook">Facebook</string>
+    <string name="action_logout">Salir</string>
+    <string name="facebook_app_id">498043890337881</string>
+    <string name="pregunta">¿Vas solo?</string>
+    <string name="next_place">Siguiente</string>
+    <string name="write_review">Reseña</string>
+    <string name="finish">Salir</string>
+    <string name="fav">Favorito</string>
+    <string name="photo_upload">Subir Foto</string>
+    <string name="title">Titulo</string>
+    <string name="description">Descripcion</string>
+    <string name="review_label">Escribe tu reseña:</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="cancel">Cancelar</string>
+    <string name="submit">Send</string>
+
+
+    <string name="invalid_rating">Calificación no valida.</string>
+    <string name="invalid_review_title">El título no puede ir vacío.</string>
+    <string name="invalid_review_description">Calificación no valida.</string>
+
+    <string name="reviews_list_error">No se pudo conectar al servidor para reviews</string>
+
+    <string name="loremmediuam">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales et sem eget euismod. Fusce ullamcorper nisi massa, ut convallis ligula lacinia ac. Aenean ultrices metus arcu, sed scelerisque mi mollis ac. Vivamus semper scelerisque fringilla. In suscipit mi nisl. Nam lobortis libero odio. Donec lobortis tempus turpis.
+
+</string>
+</resources>

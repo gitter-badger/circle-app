@@ -1,0 +1,9 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="home_btn_minWidth">150dp</dimen>
+
+    <dimen name="review_username">18sp</dimen>
+    <dimen name="review_review_mTop">8dp</dimen>
+</resources>

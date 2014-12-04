@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:id="@+id/container"
+    android:background="@drawable/border_top"
+    android:layout_height="wrap_content"
+    android:layout_gravity="start"
+    android:orientation="horizontal">
+
+    <!--<at.markushi.ui.CircleButton
+        android:id="@+id/userpic"
+        android:layout_width="64dip"
+        android:layout_height="64dip"
+        app:cb_color="#99CC00"
+        app:cb_pressedRingWidth="8dip" />-->
+
+    <ImageView
+        android:id="@+id/userpic"
+        android:layout_width="64dip"
+        android:layout_height="64dip" />
+
+    <LinearLayout
+        android:id="@+id/review"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="8"
+        android:paddingStart="@dimen/review_review_mTop"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/username"
+            android:text="@string/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/review_username"/>
+
+        <RatingBar
+            android:id="@+id/rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:isIndicator="true"
+            android:numStars="5"/>
+
+        <TextView
+            android:id="@+id/title"
+            android:text="@string/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="@dimen/review_username"/>
+        <TextView
+            android:id="@+id/description"
+            android:text="@string/loremmediuam"
+            android:layout_marginTop="@dimen/review_review_mTop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>
