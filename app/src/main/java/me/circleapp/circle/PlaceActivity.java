@@ -71,9 +71,9 @@ public class PlaceActivity extends Activity {
         ParseQuery query = app.mUser.getRelation("favs").getQuery();
         query.whereEqualTo("objectId", place.getObjectId());
 
-        query.findInBackground(new FindCallback() {
+        query.findInBackground(new FindCallback<ParseObject>() {
             @Override
-            public void done(List list, ParseException e) {
+            public void done(List<ParseObject> list, ParseException e) {
                 if (e == null) {
                     if(list.size() > 0){
                         isFavorite = true;
@@ -105,7 +105,11 @@ public class PlaceActivity extends Activity {
                 parseReview.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                        placeFragment.loadReviews();
+                        if(e == null){
+                            placeFragment.loadReviews();
+                        }else{
+                            Log.i(LOG_TAG, e.getMessage());
+                        }
                     }
                 });
             }
@@ -153,9 +157,11 @@ public class PlaceActivity extends Activity {
         app.mUser.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
-                if (e == null) {
-                    placeFragment.toggleFav(!isFavorite);
-                }
+            if (e == null) {
+                placeFragment.toggleFav(!isFavorite);
+            }else{
+                Log.i(LOG_TAG, e.getMessage());
+            }
             }
         });
     }

@@ -31,8 +31,13 @@ public class Review implements Serializable {
         this.description = review.getString("description");
         this.stars = (float) review.getDouble("stars");
         ParseUser user = review.getParseUser("user");
-        this.facebookId = user.getString("facebookId");
-        this.userName = user.getString("username");
+        if(user != null){
+            this.facebookId = user.getString("facebookId");
+            this.userName = user.getString("username");
+        }else{
+            this.facebookId = "2345667654321";
+            this.userName = "Undefined";
+        }
     }
 
     public String getUserName(){ return userName; }

@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/blue"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -11,11 +12,11 @@
 
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="130dp"
+        android:layout_width="270dp"
         android:layout_height="130dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:background="@drawable/logo" />
+        android:layout_marginTop="80dp"
+        android:background="@drawable/logox" />
 
     <com.facebook.widget.LoginButton
         android:id="@+id/facebook_btn"
@@ -29,28 +30,25 @@
 
 
     <Button
+        style="@style/menuActionButton"
         android:id="@+id/play_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_below="@+id/logo"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="79dp"
-        android:minWidth="@dimen/home_btn_minWidth"
+        android:drawableStart="@drawable/ic_action_playback_play"
+        android:drawableLeft="@drawable/ic_action_playback_play"
         android:onClick="letsPlay"
-        android:text="@string/jugar"
-        android:visibility="gone" />
+        android:text="@string/jugar"/>
 
     <Button
+        style="@style/menuActionButton"
         android:id="@+id/favorites"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_below="@+id/play_btn"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="7dp"
+        android:drawableStart="@drawable/ic_action_heart_white"
+        android:drawableLeft="@drawable/ic_action_heart_white"
         android:minWidth="@dimen/home_btn_minWidth"
         android:onClick="favs"
-        android:text="@string/favs"
-        android:visibility="gone" />
+        android:text="@string/favs" />
 
     <ProgressBar
         android:id="@+id/progressBar"

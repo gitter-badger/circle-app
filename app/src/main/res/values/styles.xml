@@ -34,4 +34,21 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">@android:color/transparent</item>
     </style>
+
+    <style name="shadowText">
+        <item name="android:shadowColor">#000000</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">1</item>
+    </style>
+
+    <style name="menuActionButton">
+        <item name="android:background">@color/blue_light</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:minWidth">@dimen/home_btn_minWidth</item>
+        <item name="android:visibility">gone</item>
+    </style>
 </resources>

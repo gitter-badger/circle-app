@@ -20,17 +20,23 @@
             android:layout_alignParentTop="true" />
 
         <TextView
+            style="@style/shadowText"
             android:id="@+id/place_name"
+            android:textColor="@android:color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/place_short_location"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:maxWidth="200dp"
+            android:gravity="center"
             android:text="Medium Text"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
+            style="@style/shadowText"
             android:id="@+id/place_short_location"
+            android:textColor="@android:color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -45,26 +51,36 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:id="@+id/action_buttons"
         android:layout_weight="0.09"
-        android:background="@android:color/holo_purple"
+        android:background="@drawable/bottom_stroke"
         android:orientation="horizontal">
 
-        <Button
+        <ImageButton
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:background="@android:color/transparent"
             android:layout_height="match_parent"
+            android:src="@drawable/ic_action_sad_heart"
             android:id="@+id/favButton"
             android:onClick="addToFavorites"
-            android:text="@string/fav"/>
+            android:contentDescription="@string/fav"/>
 
-        <Button
+        <View
+            android:layout_width="0.7dp"
+            android:layout_height="fill_parent"
+            android:background="@android:color/darker_gray"/>
+
+        <ImageButton
             android:layout_width="0dp"
+            android:background="@android:color/transparent"
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:id="@+id/picButton"
             android:onClick="uploadPhoto"
-            android:text="@string/photo_upload"/>
+            android:src="@drawable/ic_action_camera"
+            android:contentDescription="@string/photo_upload"/>
     </LinearLayout>
 
     <ListView
@@ -72,15 +88,16 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.54"
-        android:background="@android:color/holo_green_light" />
+        android:background="@android:color/white" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:id="@+id/place_buttons"
         android:layout_weight="0.09"
-        android:background="@android:color/holo_red_light"
+        android:background="@color/placeButtonsBar"
         android:orientation="horizontal">
 
         <Button

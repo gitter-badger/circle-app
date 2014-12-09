@@ -111,10 +111,12 @@ public class FavoritesFragment extends Fragment implements AbsListView.OnItemCli
         query.findInBackground(new FindCallback() {
             @Override
             public void done(List list, ParseException e) {
-                for(Object fav : list){
-                    favs.add( (ParseObject) fav);
+                if(list != null){
+                    for(Object fav : list){
+                        favs.add( (ParseObject) fav);
+                    }
+                    mAdapter.notifyDataSetChanged();
                 }
-                mAdapter.notifyDataSetChanged();
             }
         });
     }

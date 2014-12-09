@@ -47,6 +47,8 @@ public class MenuActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_activiy);
 
+        getActionBar().setTitle("");
+
         menu = null;
         app = (App) this.getApplicationContext();
         pb = (ProgressBar) findViewById(R.id.progressBar);

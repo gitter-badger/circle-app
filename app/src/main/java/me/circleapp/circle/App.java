@@ -55,9 +55,11 @@ public class App extends Application {
     public boolean isUserLogged(){
         if( mPreferences.getBoolean(mSessionKey, false) ){
             mUser = ParseUser.getCurrentUser();
+
             if(mUser != null){
                 return true;
             }
+            Log.e(LOG_TAG, "No user");
             logoutUser();
         }
         return false;

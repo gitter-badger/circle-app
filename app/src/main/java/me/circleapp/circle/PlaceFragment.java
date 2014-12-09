@@ -3,10 +3,12 @@ package me.circleapp.circle;
 import android.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,7 +33,7 @@ public class PlaceFragment extends Fragment {
     protected Place place;
     protected boolean next;
     protected Button mNextPlace;
-    protected Button mFavButton;
+    protected ImageButton mFavButton;
     protected ParseObject parsePlace;
     protected PlaceReviewAdapter mReviewAdapter;
     protected ArrayList<Review> mReviewsList;
@@ -53,9 +55,9 @@ public class PlaceFragment extends Fragment {
 
     public void toggleFav(boolean fav) {
         if (fav) {
-            mFavButton.setText("Quitar de favoritos");
+            mFavButton.setImageResource(R.drawable.ic_action_heart);
         } else {
-            mFavButton.setText("Favorito");
+            mFavButton.setImageResource(R.drawable.ic_action_sad_heart);
         }
     }
 
@@ -77,7 +79,7 @@ public class PlaceFragment extends Fragment {
         mPlaceShortLocation = (TextView) v.findViewById(R.id.place_short_location);
         mReviews = (ListView) v.findViewById(R.id.reviews_list);
         mNextPlace = (Button) v.findViewById(R.id.nextPlace);
-        mFavButton = (Button) v.findViewById(R.id.favButton);
+        mFavButton = (ImageButton) v.findViewById(R.id.favButton);
         mPlaceName.setText(place.getName());
         mPlaceShortLocation.setText(place.getShortLocation());
 
