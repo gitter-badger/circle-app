@@ -14,10 +14,20 @@
 
         <ImageView
             android:id="@+id/place_cover"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true" />
+
+        <ImageView
+            android:id="@+id/mask"
+            android:src="@drawable/mask"
+            android:layout_width="match_parent"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:layout_height="match_parent" />
 
         <TextView
             style="@style/shadowText"

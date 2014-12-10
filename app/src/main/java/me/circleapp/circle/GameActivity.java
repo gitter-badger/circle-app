@@ -85,7 +85,7 @@ public class GameActivity extends Activity implements GooglePlayServicesClient.C
                     mNextList = treeResponse.results;
                 }else{
                     //No hay lugares cerca
-                    Toast.makeText(GameActivity.this, "No nearby place found", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GameActivity.this, "No hay lugares cercanos.", Toast.LENGTH_SHORT).show();
                     onBackPressed();
                 }
             }else{

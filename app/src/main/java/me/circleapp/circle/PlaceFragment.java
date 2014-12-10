@@ -9,14 +9,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseRelation;
+import com.squareup.picasso.Picasso;
+
 import me.circleapp.api.objects.Place;
 import me.circleapp.api.objects.Review;
 import me.circleapp.circle.adapters.PlaceReviewAdapter;
@@ -34,6 +40,7 @@ public class PlaceFragment extends Fragment {
     protected boolean next;
     protected Button mNextPlace;
     protected ImageButton mFavButton;
+    protected ImageView mPlaceCover;
     protected ParseObject parsePlace;
     protected PlaceReviewAdapter mReviewAdapter;
     protected ArrayList<Review> mReviewsList;
@@ -80,6 +87,8 @@ public class PlaceFragment extends Fragment {
         mReviews = (ListView) v.findViewById(R.id.reviews_list);
         mNextPlace = (Button) v.findViewById(R.id.nextPlace);
         mFavButton = (ImageButton) v.findViewById(R.id.favButton);
+        mPlaceCover = (ImageView) v.findViewById(R.id.place_cover);
+
         mPlaceName.setText(place.getName());
         mPlaceShortLocation.setText(place.getShortLocation());
 
@@ -87,6 +96,18 @@ public class PlaceFragment extends Fragment {
         mReviewAdapter = new PlaceReviewAdapter(getActivity(), mReviewsList);
 
         mReviews.setAdapter(mReviewAdapter);
+
+
+        ParseQuery pixQuery = ParseObject.createWithoutData("Place", place.getObjectId()).getRelation("pix").getQuery();
+        pixQuery.getFirstInBackground(new GetCallback() {
+            @Override
+            public void done(ParseObject parseObject, ParseException e) {
+                if (parseObject != null) {
+                    ParseFile image = parseObject.getParseFile("image");
+                    Picasso.with(getActivity()).load(image.getUrl()).into(mPlaceCover);
+                }
+            }
+        });
 
         loadReviews();
 
@@ -97,7 +118,7 @@ public class PlaceFragment extends Fragment {
         return v;
     }
 
-    public void loadReviews(){
+    public void loadReviews() {
         ParseQuery reviewsQuery = ParseQuery.getQuery("Review");
         reviewsQuery.whereEqualTo("place", ParseObject.createWithoutData("Place", place.getObjectId()));
         reviewsQuery.orderByDescending("createdAt");

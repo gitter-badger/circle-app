@@ -36,7 +36,6 @@ public class FavsActivity extends Activity implements FavoritesFragment.OnFragme
     }
 
     public void onItemClicked(Place place) {
-        Log.d(LOG_TAG, ">>>>>>>>>>> Placeando");
         Intent favs = new Intent(this, PlaceActivity.class);
         favs.putExtra("place", place);
         favs.putExtra("nextList", new ArrayList<Place>());
