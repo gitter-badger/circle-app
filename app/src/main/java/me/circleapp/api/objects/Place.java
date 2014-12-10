@@ -17,7 +17,11 @@ public class Place implements Serializable {
 
     public Place(ParseObject place){
         name = place.getString("name");
+        objectId = place.getObjectId();
+        shortLocation = place.getString("shortLocation");
+
     }
+
     public Place(){ this.name = "Prueba :)"; }
 
     public String getName(){

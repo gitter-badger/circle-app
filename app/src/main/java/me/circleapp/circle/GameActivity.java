@@ -111,7 +111,7 @@ public class GameActivity extends Activity implements GooglePlayServicesClient.C
         if(mLocation != null){
             double latitude = mLocation.getLatitude();
             double longitude = mLocation.getLongitude();
-            int radius = 5;
+            int radius = 105;
             Where2GoAPI api = new Where2GoAPI();
             api.getTree(latitude, longitude, radius, treeCallback);
         }else{

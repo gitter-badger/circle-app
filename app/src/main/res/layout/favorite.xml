@@ -2,16 +2,33 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:id="@+id/container"
+    android:descendantFocusability="blocksDescendants"
     android:background="@android:color/darker_gray"
     android:layout_height="120dp"
     android:minHeight="120dp">
 
+
+
     <ImageView
         android:id="@+id/background"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:maxHeight="120dp"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:layout_height="120dp" />
+
+    <ImageView
+        android:id="@+id/mask"
+        android:src="@drawable/mask"
+        android:layout_width="match_parent"
+        android:maxHeight="120dp"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:layout_height="120dp" />
 
     <TextView
+        style="@style/shadowText"
+        android:textColor="@android:color/white"
         android:id="@+id/place_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,6 +37,8 @@
         android:text="@string/accept" />
 
     <TextView
+        style="@style/shadowText"
+        android:textColor="@android:color/white"
         android:id="@+id/place_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

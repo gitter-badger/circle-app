@@ -1,6 +1,8 @@
 package me.circleapp.circle;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +22,7 @@ import com.parse.SaveCallback;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.circleapp.api.objects.Place;
 import me.circleapp.circle.adapters.FavoriteAdapter;
 
 /**
@@ -124,7 +127,6 @@ public class FavoritesFragment extends Fragment implements AbsListView.OnItemCli
         });
     }
 
-
     public static void unFav(int index) {
         final int position = index;
         ParseRelation relation = app.mUser.getRelation("favs");
@@ -143,7 +145,7 @@ public class FavoritesFragment extends Fragment implements AbsListView.OnItemCli
             }
         });
     }
-    /*@Override
+    @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
@@ -152,7 +154,7 @@ public class FavoritesFragment extends Fragment implements AbsListView.OnItemCli
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
         }
-    }*/
+    }
 
     @Override
     public void onDetach() {
@@ -163,7 +165,10 @@ public class FavoritesFragment extends Fragment implements AbsListView.OnItemCli
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Log.d("FavsFragment", "<<<<<<<<< Debugeando");
         if (null != mListener) {
+            mListener.onItemClicked(new Place(favs.get(position)));
+            //overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out_null);
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
             //mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
@@ -195,7 +200,7 @@ public class FavoritesFragment extends Fragment implements AbsListView.OnItemCli
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(String id);
+        public void onItemClicked(Place place);
     }
 
 }
