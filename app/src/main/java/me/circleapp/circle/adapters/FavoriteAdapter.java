@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.parse.ParseObject;
+
+import me.circleapp.circle.FavoritesFragment;
 import me.circleapp.circle.R;
 
 import java.util.ArrayList;
@@ -44,7 +46,7 @@ public class FavoriteAdapter extends ArrayAdapter<ParseObject> {
             holder.background = (ImageView) holder.container.findViewById(R.id.background);
             holder.location = (TextView) holder.container.findViewById(R.id.place_location);
             holder.name = (TextView) holder.container.findViewById(R.id.place_name);
-
+            holder.unfav = (ImageButton) holder.container.findViewById(R.id.unfav);
             view.setTag(holder);
         }else{
             holder = (ViewHolder) view.getTag();
@@ -54,17 +56,37 @@ public class FavoriteAdapter extends ArrayAdapter<ParseObject> {
 
         Log.e(LOG_TAG, place.getRelation("pix").toString());
         //Picasso.with(this.getContext()).load().centerCrop().into(holder.background);
-
+        holder.unfav.setOnClickListener(new UnFavClickListener(position));
+        holder.unfav.setImageResource(R.drawable.ic_action_heart);
         holder.location.setText(place.getString("name"));
         holder.name.setText(place.getString("shortLocation"));
 
         return view;
     }
 
+
+    private class UnFavClickListener implements View.OnClickListener {
+
+        private int index;
+        private FavoriteAdapter adapter;
+
+        public UnFavClickListener(int index){
+            this.index = index;
+        }
+
+        @Override
+        public void onClick(View v){
+            ImageButton me = (ImageButton) v;
+            me.setImageResource(R.drawable.ic_action_sad_heart);
+            FavoritesFragment.unFav(this.index);
+        }
+
+    }
+
     public class ViewHolder{
         View container;
         ImageView background;
-        ImageButton toogleFav;
+        ImageButton unfav;
         TextView name;
         TextView location;
     }

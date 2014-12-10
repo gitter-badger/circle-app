@@ -11,7 +11,7 @@
     <string name="favs">Favoritos</string>
     <string name="title_activity_favs">Favoritos</string>
     <string name="facebook">Facebook</string>
-    <string name="action_logout">Salir</string>
+    <string name="action_logout">Cerrar Sesión</string>
     <string name="facebook_app_id">498043890337881</string>
     <string name="pregunta">¿Vas solo?</string>
     <string name="next_place">Siguiente</string>

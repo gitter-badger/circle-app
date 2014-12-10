@@ -83,6 +83,10 @@ public class GameActivity extends Activity implements GooglePlayServicesClient.C
                 if(treeResponse.results.size() > 0){
                     mTree = treeResponse.results.remove(0);
                     mNextList = treeResponse.results;
+                }else{
+                    //No hay lugares cerca
+                    Toast.makeText(GameActivity.this, "No nearby place found", Toast.LENGTH_SHORT).show();
+                    onBackPressed();
                 }
             }else{
                 onBackPressed();
@@ -107,7 +111,7 @@ public class GameActivity extends Activity implements GooglePlayServicesClient.C
         if(mLocation != null){
             double latitude = mLocation.getLatitude();
             double longitude = mLocation.getLongitude();
-            int radius = 100;
+            int radius = 5;
             Where2GoAPI api = new Where2GoAPI();
             api.getTree(latitude, longitude, radius, treeCallback);
         }else{

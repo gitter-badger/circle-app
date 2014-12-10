@@ -159,6 +159,7 @@ public class PlaceActivity extends Activity {
             public void done(ParseException e) {
             if (e == null) {
                 placeFragment.toggleFav(!isFavorite);
+                isFavorite = !isFavorite;
             }else{
                 Log.i(LOG_TAG, e.getMessage());
             }

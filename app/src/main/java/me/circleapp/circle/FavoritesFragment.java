@@ -2,6 +2,7 @@ package me.circleapp.circle;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,9 +41,9 @@ public class FavoritesFragment extends Fragment implements AbsListView.OnItemCli
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private App app;
+    private static App app;
 
-    private ArrayList<ParseObject> favs;
+    protected static ArrayList<ParseObject> favs;
     private OnFragmentInteractionListener mListener;
 
     /**
@@ -53,7 +55,7 @@ public class FavoritesFragment extends Fragment implements AbsListView.OnItemCli
      * The Adapter which will be used to populate the ListView/GridView with
      * Views.
      */
-    private FavoriteAdapter mAdapter;
+    protected static FavoriteAdapter mAdapter;
 
     // TODO: Rename and change types of parameters
     public static FavoritesFragment newInstance() {
@@ -111,9 +113,10 @@ public class FavoritesFragment extends Fragment implements AbsListView.OnItemCli
         query.findInBackground(new FindCallback() {
             @Override
             public void done(List list, ParseException e) {
-                if(list != null){
-                    for(Object fav : list){
-                        favs.add( (ParseObject) fav);
+                if (list != null) {
+                    favs.clear();
+                    for (Object fav : list) {
+                        favs.add((ParseObject) fav);
                     }
                     mAdapter.notifyDataSetChanged();
                 }
@@ -121,6 +124,25 @@ public class FavoritesFragment extends Fragment implements AbsListView.OnItemCli
         });
     }
 
+
+    public static void unFav(int index) {
+        final int position = index;
+        ParseRelation relation = app.mUser.getRelation("favs");
+
+        relation.remove(favs.get(index));
+
+        app.mUser.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    favs.remove(position);
+                    mAdapter.notifyDataSetChanged();
+                } else {
+                    //Log.i(LOG_TAG, e.getMessage());
+                }
+            }
+        });
+    }
     /*@Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
