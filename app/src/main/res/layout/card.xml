@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_gravity="center"
+    android:layout_width="250dp"
+    style="@style/shadowText"
+    android:background="@android:color/darker_gray"
+    android:layout_height="170dp">
+
+    <TextView
+        android:id="@+id/text"
+        android:textSize="35sp"
+        android:layout_marginTop="30dp"
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        tools:text="@string/hello_world"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_below="@id/text"
+        android:layout_centerInParent="true"
+        android:src="@drawable/ic_action_heart" />
+
+    <TextView
+        android:id="@+id/item_swipe_left_indicator"
+        android:alpha="0"
+        android:text="Yep!"
+        android:padding="5dp"
+        android:gravity="center"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_margin="10dp"
+        android:layout_alignParentRight="true"
+        android:background="@android:color/holo_green_light" />
+
+    <TextView
+        android:id="@+id/item_swipe_right_indicator"
+        android:alpha="0"
+        android:padding="5dp"
+        android:gravity="center"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_margin="10dp"
+        android:layout_gravity="right"
+        android:text="Nope!"
+        android:background="@android:color/holo_red_light" />
+
+</RelativeLayout>

@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/libraries" />
             <option value="$PROJECT_DIR$/libraries/facebook" />
+            <option value="$PROJECT_DIR$/libraries/swipecards" />
           </set>
         </option>
       </GradleProjectSettings>

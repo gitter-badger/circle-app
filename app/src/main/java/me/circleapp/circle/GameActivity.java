@@ -6,32 +6,25 @@ import android.app.DialogFragment;
 import android.content.ClipData;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.DragEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
-import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
-import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.LocationClient;
-import com.parse.GetCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
+import com.lorentzos.flingswipe.SwipeFlingAdapterView;
+
 import me.circleapp.api.Where2GoAPI;
 import me.circleapp.api.objects.Place;
 import me.circleapp.api.responses.TreeResponse;
@@ -56,19 +49,81 @@ public class GameActivity extends Activity implements GooglePlayServicesClient.C
     protected List<Place> mNextList;
     protected ProgressBar mLoader;
     protected View mGameLayout;
+    private ArrayList<String> al;
+    private ArrayAdapter<String> arrayAdapter;
+    private int i;
+    private SwipeFlingAdapterView mCardsContainer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_activiy);
-        findViewById(R.id.ynimage).setOnTouchListener(new MyTouchListener());
-        findViewById(R.id.start).setOnDragListener(new MyDragListener());
-        findViewById(R.id.positive).setOnDragListener(new MyDragListener());
-        findViewById(R.id.negative).setOnDragListener(new MyDragListener());
+
+        mCardsContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
+
+        al = new ArrayList<String>();
+        al.add("Amigos");
+        al.add("Familia");
+        al.add("python");
+        al.add("java");
+
+        //choose your favorite adapter
+        arrayAdapter = new ArrayAdapter<String>(this, R.layout.card, R.id.text, al);
+
+        //set the listener and the adapter
+        mCardsContainer.setAdapter(arrayAdapter);
+        mCardsContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
+            @Override
+            public void removeFirstObjectInAdapter() {
+                // this is the simplest way to delete an object from the Adapter (/AdapterView)
+                Log.d("LIST", "removed object!");
+                al.remove(0);
+                arrayAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onLeftCardExit(Object dataObject) {
+                //Do something on the left!
+                //You also have access to the original object.
+                //If you want to use it just cast it (String) dataObject
+                Toast.makeText(GameActivity.this, "Left!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onRightCardExit(Object dataObject) {
+                Toast.makeText(GameActivity.this, "Right!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAdapterAboutToEmpty(int itemsInAdapter) {
+                // Ask for more data here
+                if (itemsInAdapter == 0) {
+                    Intent favs = new Intent(GameActivity.this, PlaceActivity.class);
+                    favs.putExtra("place", mTree);
+                    favs.putExtra("nextList", (ArrayList<Place>) mNextList);
+                    startActivity(favs);
+                    overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out_null);
+                }
+            }
+
+            @Override
+            public void onScroll(float scrollProgressPercent) {
+                View view = mCardsContainer.getSelectedView();
+                view.findViewById(R.id.item_swipe_right_indicator).setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
+                view.findViewById(R.id.item_swipe_left_indicator).setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
+            }
+        });
+
+        // Optionally add an OnItemClickListener
+        mCardsContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClicked(int itemPosition, Object dataObject) {
+                Toast.makeText(GameActivity.this, "Clicked!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         mLoader = (ProgressBar) findViewById(R.id.loader);
-        mGameLayout = findViewById(R.id.gameLayout);
-
         mLocationClient = new LocationClient(this, this, this);
         mLocationClient.connect();
 
@@ -77,18 +132,18 @@ public class GameActivity extends Activity implements GooglePlayServicesClient.C
     protected Callback<TreeResponse> treeCallback = new Callback<TreeResponse>() {
         @Override
         public void success(TreeResponse treeResponse, Response response) {
-            if(treeResponse.error == null){
+            if (treeResponse.error == null) {
                 mLoader.setVisibility(ProgressBar.GONE);
-                mGameLayout.setVisibility(View.VISIBLE);
-                if(treeResponse.results.size() > 0){
+                mCardsContainer.setVisibility(View.VISIBLE);
+                if (treeResponse.results.size() > 0) {
                     mTree = treeResponse.results.remove(0);
                     mNextList = treeResponse.results;
-                }else{
+                } else {
                     //No hay lugares cerca
                     Toast.makeText(GameActivity.this, "No hay lugares cercanos.", Toast.LENGTH_SHORT).show();
                     onBackPressed();
                 }
-            }else{
+            } else {
                 onBackPressed();
             }
         }
@@ -108,13 +163,13 @@ public class GameActivity extends Activity implements GooglePlayServicesClient.C
     @Override
     public void onConnected(Bundle dataBundle) {
         mLocation = mLocationClient.getLastLocation();
-        if(mLocation != null){
+        if (mLocation != null) {
             double latitude = mLocation.getLatitude();
             double longitude = mLocation.getLongitude();
             int radius = 105;
             Where2GoAPI api = new Where2GoAPI();
             api.getTree(latitude, longitude, radius, treeCallback);
-        }else{
+        } else {
             Toast.makeText(this, "No location found!", Toast.LENGTH_SHORT).show();
             onBackPressed();
         }
@@ -149,110 +204,40 @@ public class GameActivity extends Activity implements GooglePlayServicesClient.C
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
-        }else if(id == android.R.id.home){
+        } else if (id == android.R.id.home) {
             onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private final class MyTouchListener implements OnTouchListener {
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                ClipData data = ClipData.newPlainText("", "");
-                DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
-                view.startDrag(data, shadowBuilder, view, 0);
-                view.setVisibility(View.INVISIBLE);
-                return true;
-            } else {
-                return false;
-            }
-        }
-    }
-
-    class MyDragListener implements OnDragListener {
-        Drawable enterShapeY = getResources().getDrawable(R.drawable.dropareay);
-        Drawable enterShapeN = getResources().getDrawable(R.drawable.droparean);
-        Drawable normalShape = getResources().getDrawable(R.drawable.shape);
-
-        @Override
-        public boolean onDrag(View v, DragEvent event) {
-            int action = event.getAction();
-            switch (event.getAction()) {
-                case DragEvent.ACTION_DRAG_STARTED:
-                    // do nothing
-                    break;
-                case DragEvent.ACTION_DRAG_ENTERED:
-                    if(v == findViewById(R.id.positive)){
-                        v.setBackgroundDrawable(enterShapeY);
-                    }
-                    if(v == findViewById(R.id.negative)){
-                        v.setBackgroundDrawable(enterShapeN);
-                    }
-                    break;
-                case DragEvent.ACTION_DRAG_EXITED:
-                    v.setBackgroundDrawable(normalShape);
-                    break;
-                case DragEvent.ACTION_DROP:
-                    // Dropped, reassign View to ViewGroup
-                    View view = (View) event.getLocalState();
-                    TextView pregunta = (TextView) findViewById(R.id.pregunta);
-                    View icono = (View) findViewById(R.id.ynimage);
-                    ViewGroup owner = (ViewGroup) view.getParent();
-                    owner.removeView(view);
-                    RelativeLayout container = (RelativeLayout) v;
-                    container.addView(view);
-                    view.setVisibility(View.VISIBLE);
-                    if(v == findViewById(R.id.positive)){
-                        pregunta.setText("Sí.");
-
-                        Intent favs = new Intent(GameActivity.this, PlaceActivity.class);
-                        favs.putExtra("place", mTree);
-                        favs.putExtra("nextList", (ArrayList<Place>) mNextList);
-                        startActivity(favs);
-                        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out_null);
-
-                        //icono.setVisibility(View.GONE);
-                    }
-                    if(v == findViewById(R.id.negative)){
-                        pregunta.setText("No.");
-                        //icono.setVisibility(View.GONE);
-                    }
-                    if(v == findViewById(R.id.start)){
-                        pregunta.setText("¿Vas solo?");
-                        //icono.setVisibility(View.GONE);
-                    }
-                    break;
-                case DragEvent.ACTION_DRAG_ENDED:
-                    v.setBackgroundDrawable(normalShape);
-                default:
-                    break;
-            }
-            return true;
-        }
-    }
 
     private final static int
             CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
+
     // Define a DialogFragment that displays the error dialog
     public static class ErrorDialogFragment extends DialogFragment {
         // Global field to contain the error dialog
         private Dialog mDialog;
+
         // Default constructor. Sets the dialog field to null
         public ErrorDialogFragment() {
             super();
             mDialog = null;
         }
+
         // Set the dialog to display
         public void setDialog(Dialog dialog) {
             mDialog = dialog;
         }
+
         // Return a Dialog to the DialogFragment.
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             return mDialog;
         }
     }
+
     /*
      * Handle results returned to the FragmentActivity
      * by Google Play services
@@ -262,13 +247,13 @@ public class GameActivity extends Activity implements GooglePlayServicesClient.C
             int requestCode, int resultCode, Intent data) {
         // Decide what to do based on the original request code
         switch (requestCode) {
-            case CONNECTION_FAILURE_RESOLUTION_REQUEST :
+            case CONNECTION_FAILURE_RESOLUTION_REQUEST:
             /*
              * If the result code is Activity.RESULT_OK, try
              * to connect again
              */
                 switch (resultCode) {
-                    case Activity.RESULT_OK :
+                    case Activity.RESULT_OK:
                         break;
                 }
         }
@@ -315,6 +300,7 @@ public class GameActivity extends Activity implements GooglePlayServicesClient.C
         Toast.makeText(this, "Disconnected. Please re-connect.",
                 Toast.LENGTH_SHORT).show();
     }
+
     /*
      * Called by Location Services if the attempt to
      * Location Services fails.
